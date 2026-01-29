@@ -7,7 +7,7 @@ import {
   UpdateTodoItemDto,
 } from './dtos';
 
-@Controller('api/v1/todos')
+@Controller('todos')
 export class TodoItemsAPI {
   constructor(private readonly todoItemsDB: TodoItemsDB) {}
 
@@ -22,7 +22,7 @@ export class TodoItemsAPI {
     const todoItem = await this.todoItemsDB.createTodoItem({
       title: createDto.title,
       description: createDto.description ?? null,
-      completed: createDto.completed ?? false,
+      completed: false,
     });
     return new TodoItemResponseDto(todoItem);
   }
@@ -32,10 +32,10 @@ export class TodoItemsAPI {
     @Param('id') id: string,
     @Body() updateDto: UpdateTodoItemDto,
   ): Promise<TodoItemResponseDto> {
+    console.log('Update DTO:', updateDto);
     const todoItem = await this.todoItemsDB.updateTodoItem(id, {
       title: updateDto.title,
       description: updateDto.description,
-      completed: updateDto.completed,
     });
     return new TodoItemResponseDto(todoItem);
   }
@@ -50,5 +50,14 @@ export class TodoItemsAPI {
   async reorder(@Body() reorderDto: ReorderTodoItemsDto): Promise<{ message: string }> {
     await this.todoItemsDB.reorderTodoItems(reorderDto.items);
     return { message: 'Todo items reordered successfully' };
+  }
+
+  @Patch(':id/toggle-completed')
+  async toggleCompleted(@Param('id') id: string): Promise<TodoItemResponseDto> {
+    const todoItem = await this.todoItemsDB.findById(id);
+    const updatedTodoItem = await this.todoItemsDB.updateTodoItem(id, {
+      completed: !todoItem.completed,
+    });
+    return new TodoItemResponseDto(updatedTodoItem);
   }
 }

@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 export interface TodoItem {
   _id: string;
   title: string;
-  description?: string | null;
+  description: string | null;
   completed: boolean;
   order: number;
   createdAt: Date;
@@ -96,11 +96,16 @@ export class TodoItemsDB {
   }
 
   async updateTodoItem(id: string, data: UpdateTodoItemInput): Promise<TodoItem> {
+    const updateData = {
+      ...data,
+      updatedAt: new Date(),
+    };
+
     const updatedTodoItem = await this.db
       .collection<TodoItem>(this.collection)
       .findOneAndUpdate(
         { _id: id, deletedAt: null },
-        { $set: { ...data, updatedAt: new Date() } },
+        { $set: updateData },
         { returnDocument: 'after' },
       );
 

@@ -1,7 +1,6 @@
 import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
-  IsBoolean,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -20,26 +19,18 @@ export class CreateTodoItemDto {
   @IsOptional()
   @Transform(({ value }: { value: string }) => value?.trim() || undefined)
   description?: string;
-
-  @IsBoolean()
-  @IsOptional()
-  completed?: boolean;
 }
 
 export class UpdateTodoItemDto {
   @IsString()
   @IsOptional()
   @Transform(({ value }: { value: string }) => value?.trim() || undefined)
-  title?: string;
+  title: string;
 
   @IsString()
   @IsOptional()
   @Transform(({ value }: { value: string }) => value?.trim() || undefined)
   description?: string;
-
-  @IsBoolean()
-  @IsOptional()
-  completed?: boolean;
 }
 
 export class ReorderItemDto {
