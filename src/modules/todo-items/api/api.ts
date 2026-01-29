@@ -41,15 +41,13 @@ export class TodoItemsAPI {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<{ message: string }> {
+  async delete(@Param('id') id: string): Promise<void> {
     await this.todoItemsDB.deleteTodoItem(id);
-    return { message: 'Todo item deleted successfully' };
   }
 
   @Patch('reorder')
-  async reorder(@Body() reorderDto: ReorderTodoItemsDto): Promise<{ message: string }> {
+  async reorder(@Body() reorderDto: ReorderTodoItemsDto): Promise<void> {
     await this.todoItemsDB.reorderTodoItems(reorderDto.items);
-    return { message: 'Todo items reordered successfully' };
   }
 
   @Patch(':id/toggle-completed')
