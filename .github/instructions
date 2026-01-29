@@ -1,0 +1,6 @@
+# Fix and Learn Rules
+
+## General Guidelines
+
+- Only send frontend messages if changes are needed or there are specification discrepancies
+- If implementation follows frontend instructions exactly, no frontend notification required
