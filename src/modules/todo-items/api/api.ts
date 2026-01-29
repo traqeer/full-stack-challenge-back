@@ -1,4 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { EventBus } from 'src/common/events/events.service';
+import { TodoEvents, TodoItemCompletedEvent } from 'src/modules/todo-items/events/publisher';
 import { TodoItemsDB } from '../todo-item.db';
 import {
   CreateTodoItemDto,
@@ -6,10 +8,12 @@ import {
   TodoItemResponseDto,
   UpdateTodoItemDto,
 } from './dtos';
-
 @Controller('todos')
 export class TodoItemsAPI {
-  constructor(private readonly todoItemsDB: TodoItemsDB) {}
+  constructor(
+    private readonly todoItemsDB: TodoItemsDB,
+    private readonly eventBus: EventBus,
+  ) {}
 
   @Get()
   async findAll(): Promise<TodoItemResponseDto[]> {
@@ -32,7 +36,6 @@ export class TodoItemsAPI {
     @Param('id') id: string,
     @Body() updateDto: UpdateTodoItemDto,
   ): Promise<TodoItemResponseDto> {
-    console.log('Update DTO:', updateDto);
     const todoItem = await this.todoItemsDB.updateTodoItem(id, {
       title: updateDto.title,
       description: updateDto.description,
@@ -53,9 +56,18 @@ export class TodoItemsAPI {
   @Patch(':id/toggle-completed')
   async toggleCompleted(@Param('id') id: string): Promise<TodoItemResponseDto> {
     const todoItem = await this.todoItemsDB.findById(id);
+    const completed = !todoItem.completed;
+
     const updatedTodoItem = await this.todoItemsDB.updateTodoItem(id, {
-      completed: !todoItem.completed,
+      completed,
     });
+
+    if (completed) {
+      await this.eventBus.publish<TodoItemCompletedEvent>(TodoEvents.TODO_ITEM_COMPLETED, {
+        id,
+        title: updatedTodoItem.title,
+      });
+    }
     return new TodoItemResponseDto(updatedTodoItem);
   }
 }
