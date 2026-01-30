@@ -1,0 +1,26 @@
+meta {
+  name: Todo Items - Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/todos
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "Comprar leche",
+    "description": "Descripción opcional"
+  }
+}
+
+docs {
+  Create a new todo item.
+}

@@ -1,0 +1,41 @@
+meta {
+  name: publish-send-weekly-email
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/events/publish
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "topic": "{{testTopic}}",
+    "data": {
+      "bcc": ["{{bcc}}"],
+      "debuggingOptions": {
+        "replaceUserEmailWith": "{{replaceUserEmailWith}}"
+      }
+    }
+  }
+}
+
+vars:pre-request {
+  testTopic: notification.send-weekly-email
+  bcc: notificaciones@traqeer.com
+  replaceUserEmailWith: francarrizo2001@gmail.com
+}
+
+assert {
+  res.status: 200
+  res.body.success: true
+  res.body.topic: isString
+  res.body.timestamp: isString
+  res.body.message: isString
+}

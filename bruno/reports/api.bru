@@ -1,0 +1,20 @@
+meta {
+  name: Reports API - Daily Completion (stub)
+  type: http
+  seq: 1
+}
+
+
+get {
+  url: {{base_url}}/reports/daily-completion?startDate=2026-01-01&endDate=2026-01-30
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Stub para solicitar el reporte diario de completados usando query params startDate y endDate en formato YYYY-MM-DD.
+}
+
+

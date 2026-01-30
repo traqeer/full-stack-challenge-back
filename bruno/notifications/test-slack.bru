@@ -1,0 +1,43 @@
+meta {
+  name: Test Slack Message
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/notifications/test-slack
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "template": "simple",
+    "data": {
+      "title": "Test Title",
+      "body": "This is a test message body with *bold* and _italic_ text."
+    },
+    "channel": "U08JU1ER0BC"
+  }
+}
+
+docs {
+  # Test Slack Message
+  
+  This endpoint sends a test message to Slack using the new API implementation with templates.
+  
+  ## Parameters:
+  - `template`: "simple" or "custom"
+  - `data`: For "simple": {title: string, body: string}, for "custom": {blocks: any[]}
+  - `channel`: Channel ID (e.g., "SLACK_PRIMARY_CHANNEL")
+  - `postAt`: Optional timestamp for scheduling
+  
+  ## Usage:
+  - Test Slack integration
+  - Verify bot token and channel permissions
+  - Send custom messages for debugging
+}

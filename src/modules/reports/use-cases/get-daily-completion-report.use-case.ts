@@ -26,7 +26,7 @@ export class GetDailyCompletionReport {
 
     for (const item of allItems) {
       if (item.createdAt >= startDate && item.createdAt <= endDate) {
-        const dateKey = item.createdAt.toISOString().split('T')[0]; // YYYY-MM-DD
+        const dateKey = item.createdAt.toISOString().split('T')[0];
 
         if (!dailyStats.has(dateKey)) {
           dailyStats.set(dateKey, { total: 0, completed: 0 });

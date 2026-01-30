@@ -1,0 +1,6 @@
+{
+  "version": "1",
+  "name": "todo-back",
+  "type": "collection",
+  "ignore": ["node_modules", ".git"]
+}

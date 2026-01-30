@@ -1,0 +1,19 @@
+meta {
+  name: Todo Items - Toggle Completed
+  type: http
+  seq: 1
+}
+
+patch {
+  url: {{base_url}}/todos/:id/toggle-completed
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Toggle the completed state for a todo item by id. Replace :id in the URL with the item id.
+}
+

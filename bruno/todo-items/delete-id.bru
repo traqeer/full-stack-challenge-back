@@ -1,0 +1,19 @@
+meta {
+  name: Todo Items - Delete
+  type: http
+  seq: 1
+}
+
+delete {
+  url: {{base_url}}/todos/:id
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  Delete a todo item by id. Replace :id in the URL with the item id.
+}
+
