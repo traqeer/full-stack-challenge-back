@@ -16,13 +16,17 @@ export class NotificationsEventHandler {
 
   @OnEvent(TodoEvents.TODO_ITEM_COMPLETED, 'notifications.todo_item_completed')
   async handleTodoItemCompletedEvent({ title }: TodoItemCompletedEvent) {
-    await this.slackService.sendMessage({
-      channel: this.slackNotificationsChannel,
-      template: SlackTemplateType.SIMPLE,
-      data: {
-        title: 'Todo Item Completed',
-        body: `The todo item "${title}" has been completed.`,
-      },
-    });
+    try {
+      await this.slackService.sendMessage({
+        channel: this.slackNotificationsChannel,
+        template: SlackTemplateType.SIMPLE,
+        data: {
+          title: 'Todo Item Completed',
+          body: `The todo item "${title}" has been completed.`,
+        },
+      });
+    } catch (error) {
+      console.error('Failed to send Slack notification for todo item completion:', error);
+    }
   }
 }

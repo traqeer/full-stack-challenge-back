@@ -25,7 +25,7 @@ export class EventsModule {
             uri: options.rabbitmqUrl || configService.getOrThrow<string>('RABBITMQ_URL'),
             exchanges: [
               {
-                name: 'test',
+                name: 'todos',
                 type: 'topic',
               },
             ],

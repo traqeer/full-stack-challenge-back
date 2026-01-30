@@ -5,6 +5,8 @@ import { CommonCacheModule } from 'src/common/cache/cache.module';
 import { GlobalExceptionFilter } from 'src/common/global-exception.filter';
 import { MongoConnection, MongodbModule } from 'src/common/mongodb/mongodb.module';
 import { EventsModule } from './common/events/events.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
+import { ReportsModule } from './modules/reports/reports.module';
 import { TodoItemsModule } from './modules/todo-items/todo-items.module';
 
 @Module({
@@ -33,6 +35,8 @@ import { TodoItemsModule } from './modules/todo-items/todo-items.module';
     }),
     CommonCacheModule,
     TodoItemsModule,
+    ReportsModule,
+    NotificationsModule,
   ],
   providers: [
     {

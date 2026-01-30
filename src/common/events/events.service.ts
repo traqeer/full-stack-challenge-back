@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
 import { AmqpConnection, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
+import { Injectable } from '@nestjs/common';
 
-export const EXCHANGE_NAME = 'traqeer';
+export const EXCHANGE_NAME = 'todos';
 
 @Injectable()
 export class EventBus {
